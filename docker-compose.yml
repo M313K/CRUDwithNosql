@@ -1,0 +1,31 @@
+version: '3.9'
+
+services:
+  angular:
+    build:
+      context: ./frontend
+    ports:
+      - 4200:80
+    networks:
+      - my-network
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - 27017:27017
+    networks:
+      - my-network
+    
+  spring-boot:
+    build:
+      context: ./NosqlCRUD
+    ports:
+      - 8080:8080
+    networks:
+      - my-network
+    depends_on:
+      - mongodb
+
+networks:
+  my-network:
